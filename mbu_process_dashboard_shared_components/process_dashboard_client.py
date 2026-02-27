@@ -23,7 +23,7 @@ class ProcessDashboardClient:
     The other modules depend on this class.
     """
 
-    def __init__(self, api_admin_token: str):
+    def __init__(self, api_admin_token: str, base_url: str = None):
         """
         Initialize the client with token-based authentication.
 
@@ -31,7 +31,11 @@ class ProcessDashboardClient:
             api_admin_token (str): The admin API key used for authorization.
         """
 
-        self.base_url = PROCESS_DASHBOARD_BASE_URL
+        if base_url:
+            self.base_url = base_url
+
+        else:
+            self.base_url = PROCESS_DASHBOARD_BASE_URL
 
         self.headers = {
             "X-API-Key": api_admin_token,
