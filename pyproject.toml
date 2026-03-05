@@ -30,3 +30,7 @@ dependencies = [
   "sqlalchemy[asyncio] >= 2.0.20",
   "psutil",
 ]
+
+[tool.setuptools.package-data]
+# py.typed is a PEP 561 marker — tells type checkers (Pylance, mypy, pyright) that this package supports type checking.
+mbu_process_dashboard_shared_components = ["py.typed"]
