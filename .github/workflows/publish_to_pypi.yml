@@ -37,7 +37,7 @@ jobs:
 
         environment:
             name: release
-            url: https://pypi.org/p/mbu_process_dashboard_shared_components/
+            url: https://pypi.org/p/mbu-process-dashboard-shared-components/
 
         permissions:
             id-token: write 
