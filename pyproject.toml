@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "mbu_process_dashboard_shared_components"   # 👈 must match the PyPI project name
-version = "1.3.0"
+version = "1.4.0"
 authors = [
   { name="MBU", email="rpa@mbu.aarhus.dk" },
 ]
