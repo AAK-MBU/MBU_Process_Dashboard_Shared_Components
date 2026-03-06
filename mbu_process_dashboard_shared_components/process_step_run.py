@@ -1,8 +1,7 @@
-""" Functions to interact with process step runs """
+"""Functions to interact with process step runs"""
 
 import logging
 import time
-
 from datetime import datetime, timezone
 
 from mbu_rpa_core.exceptions import BusinessError
@@ -50,9 +49,7 @@ def get_step_run_id_for_process_step_cpr(
             break
 
     if not step_id:
-        raise RuntimeError(
-            f"Step '{step_name}' not found for process '{process_name}'"
-        )
+        raise RuntimeError(f"Step '{step_name}' not found for process '{process_name}'")
 
     # --- Resolve run ID (already retry-safe upstream)
     run_id = get_dashboard_run_id(
@@ -73,7 +70,6 @@ def get_step_run_id_for_process_step_cpr(
             )
 
             if 200 <= res.status_code < 300:
-
                 if not res.content:
                     raise ValueError("Empty response body")
 
@@ -83,9 +79,7 @@ def get_step_run_id_for_process_step_cpr(
                 if step_run_id:
                     return step_run_id
 
-                raise LookupError(
-                    "Step run exists but ID missing in response"
-                )
+                raise LookupError("Step run exists but ID missing in response")
 
             logger.warning(
                 "GET step-run failed (attempt %s/%s) | status=%s | body=%s",
@@ -117,13 +111,16 @@ def get_step_run_id_for_process_step_cpr(
     )
 
 
-def build_step_run_update(status: str, failure: Exception | None = None) -> dict:
+def build_step_run_update(
+    status: str, failure: Exception | None = None, rerun_config: dict | None = None
+) -> dict:
     """
     Build the JSON body used for updating a step run.
 
     Args:
         status (str): New status ("success", "failed", etc.)
         failure (Exception|None): Error info to include.
+        rerun_config (dict|None): Configuration for rerunning the step.
 
     Returns:
         dict: JSON payload for PATCH.
@@ -142,7 +139,9 @@ def build_step_run_update(status: str, failure: Exception | None = None) -> dict
             failure_data = {
                 "error_code": type(failure).__name__,
                 "message": str(failure),
-                "details": str(failure.__traceback__) if failure.__traceback__ else None,
+                "details": str(failure.__traceback__)
+                if failure.__traceback__
+                else None,
             }
         else:
             failure_data = {
@@ -159,6 +158,7 @@ def build_step_run_update(status: str, failure: Exception | None = None) -> dict
         "started_at": now,
         "finished_at": now,
         "failure": failure_data,
+        "rerun_config": rerun_config or {},
     }
 
 
@@ -178,7 +178,6 @@ def update_dashboard_step_run_by_id(client, step_run_id: int, update_data: dict)
 
             # Success responses (2xx)
             if 200 <= res.status_code < 300:
-
                 # Only parse JSON if there actually is a body
                 if res.content:
                     return res.json(), res.status_code
