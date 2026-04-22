@@ -175,22 +175,14 @@ def update_dashboard_step_run_by_id(client: ProcessDashboardClient, step_run_id:
 
     while attempt <= retry_count:
         try:
-            logger.info("before res")
             res = client.patch(f"step-runs/{step_run_id}", json=update_data)
-            logger.info(f"after res: {res}")
-
-            logger.info(f"printing res status code: {res.status_code}")
 
             # Success responses (2xx)
             if 200 <= res.status_code < 300:
-                logger.info("inside if 200 case")
                 # Only parse JSON if there actually is a body
                 if res.content:
-                    logger.info("inside if res.content")
-                    logger.info(f"printing res.content: {res.content}")
                     return res.json(), res.status_code
 
-                logger.info("after if res.content - only here if not res.content")
                 return None, res.status_code
 
             logger.warning(
