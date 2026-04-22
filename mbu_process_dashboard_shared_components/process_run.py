@@ -77,7 +77,7 @@ def get_all_process_runs(client: ProcessDashboardClient, process_id: int = None,
     return all_process_runs
 
 
-def get_dashboard_run_id(client, process_id: int, cpr: str) -> int:
+def get_dashboard_run_id(client: ProcessDashboardClient, process_id: int, cpr: str) -> int:
     """
     Get the latest run ID for a process + CPR combination.
     """
@@ -137,7 +137,7 @@ def get_dashboard_run_id(client, process_id: int, cpr: str) -> int:
     )
 
 
-def get_process_run_by_cpr(client, process_name: str, cpr: str) -> bool:
+def get_process_run_by_cpr(client: ProcessDashboardClient, process_name: str, cpr: str) -> bool:
     """
     Check if a process run exists for a given CPR.
     """
@@ -195,7 +195,7 @@ def get_process_run_by_cpr(client, process_name: str, cpr: str) -> bool:
     return False
 
 
-def create_dashboard_run(client, process_name: str, meta: dict):
+def create_dashboard_run(client: ProcessDashboardClient, process_name: str, meta: dict):
     """
     Create a new process run.
 

@@ -6,6 +6,7 @@ from datetime import datetime, timezone
 
 from mbu_rpa_core.exceptions import BusinessError
 
+from .process_dashboard_client import ProcessDashboardClient
 from .process import find_process_id_and_steps
 from .process_run import get_dashboard_run_id
 
@@ -13,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 
 def get_step_run_id_for_process_step_cpr(
-    client,
+    client: ProcessDashboardClient,
     process_name: str,
     step_name: str,
     cpr: str,
@@ -162,7 +163,7 @@ def build_step_run_update(
     }
 
 
-def update_dashboard_step_run_by_id(client, step_run_id: int, update_data: dict):
+def update_dashboard_step_run_by_id(client: ProcessDashboardClient, step_run_id: int, update_data: dict):
     """
     PATCH update a step-run entry in the dashboard.
     """
@@ -178,12 +179,18 @@ def update_dashboard_step_run_by_id(client, step_run_id: int, update_data: dict)
             res = client.patch(f"step-runs/{step_run_id}", json=update_data)
             logger.info(f"after res: {res}")
 
+            logger.info(f"printing res status code: {res.status_code}")
+
             # Success responses (2xx)
             if 200 <= res.status_code < 300:
+                logger.info("inside if 200 case")
                 # Only parse JSON if there actually is a body
                 if res.content:
+                    logger.info("inside if res.content")
+                    logger.info(f"printing res.content: {res.content}")
                     return res.json(), res.status_code
 
+                logger.info("after if res.content - only here if not res.content")
                 return None, res.status_code
 
             logger.warning(
