@@ -3,8 +3,8 @@ requires = ["setuptools>=65.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "mbu_process_dashboard_shared_components"   # 👈 must match the PyPI project name
-version = "1.4.1"
+name = "mbu_process_dashboard_shared_components"
+version = "1.4.2"
 authors = [
   { name="MBU", email="rpa@mbu.aarhus.dk" },
 ]

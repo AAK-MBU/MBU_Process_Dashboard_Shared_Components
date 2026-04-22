@@ -3,10 +3,12 @@
 import logging
 import time
 
+from .process_dashboard_client import ProcessDashboardClient
+
 logger = logging.getLogger(__name__)
 
 
-def get_dashboard_step_id(client, process_id: int, step_name: str) -> int:
+def get_dashboard_step_id(client: ProcessDashboardClient, process_id: int, step_name: str) -> int:
     """
     Return a step ID based on process_id + step name.
     """

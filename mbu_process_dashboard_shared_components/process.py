@@ -3,10 +3,12 @@
 import logging
 import time
 
+from .process_dashboard_client import ProcessDashboardClient
+
 logger = logging.getLogger(__name__)
 
 
-def find_process_id_and_steps(client, process_name: str):
+def find_process_id_and_steps(client: ProcessDashboardClient, process_name: str):
     """
     Look up a process and return:
       • its ID
@@ -79,7 +81,7 @@ def find_process_id_and_steps(client, process_name: str):
     )
 
 
-def get_dashboard_process_id(client, process_name: str) -> str:
+def get_dashboard_process_id(client: ProcessDashboardClient, process_name: str) -> str:
     """
     Fetch the ID of a process by its name.
     """
