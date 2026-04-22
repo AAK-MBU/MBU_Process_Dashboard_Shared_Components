@@ -174,7 +174,9 @@ def update_dashboard_step_run_by_id(client, step_run_id: int, update_data: dict)
 
     while attempt <= retry_count:
         try:
+            logger.info("before res")
             res = client.patch(f"step-runs/{step_run_id}", json=update_data)
+            logger.info(f"after res: {res}")
 
             # Success responses (2xx)
             if 200 <= res.status_code < 300:
